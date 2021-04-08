@@ -8,7 +8,7 @@ c common blocks.
 
       include 'param.f'
       include 'c_sys.f'
-      include 'c_ran.f'
+!      include 'c_ran.f'
       include 'c_traj.f'
       include 'c_output.f'
 

@@ -363,6 +363,7 @@ c generate atom permutation lists
 c generate terms using user-supplied power constraints
       ii=1
       indtot=0
+      ! Constant term
       do i=1,npairs
         ind(ii,i)=0
       enddo

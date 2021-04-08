@@ -43,9 +43,9 @@ c msx search variables
        double precision x1mag,x1(3,mnat),gupp(3,mnat),
      &   dot1,egap,gf(3,mnat),gg(3,mnat),msx_grad(3,mnat)
 
-      print *,"xx = "
+!      print *,"xx = "
 !      print *,xx
-      print *,((xx(i,j),i=1,6),j=1,3)!,((pp(i,j),i=1,3),j=1,3)
+!      print *,((xx(i,j),i=1,6),j=1,3)!,((pp(i,j),i=1,3),j=1,3)
 c ZERO
       do i=1,nsurft
         phop(i) = 0.d0

@@ -6,7 +6,7 @@ c Computes a full trajectory from start to finish.
       include 'param.f'
       include 'c_sys.f'
       include 'c_traj.f'
-      include 'c_ran.f'
+!      include 'c_ran.f'
       include 'c_output.f'
 c hack
       common/tmp/tmpprint

@@ -2,8 +2,8 @@
 
 #set POT here or use 'gmake POT=potname'
 #POT=exp6
-TINKER=0
-POT=h3o
+#TINKER=0
+#POT=h3o
 #POT=tbplusexp6all
 #POT=tbplusexp6-2
 #POT=ch4hALL
@@ -16,10 +16,11 @@ POT=h3o
 # NOTE: obj_tinker contains a link to the mm3 PES
 # NOTE: obj_tinker2 contains a link to the amoeba09 PES
 # NOTE: obj_tinker3 contains a link to the oplsaa PES
-#TINKER=1
+TINKER=1
+#POT=PIP
 #POT=rohMP
 #POT=roohT
-#POT=alkT
+POT=alkT
 #POT=cih2o2m
 #POT=cih2o2mPIP
 #TINKER PES
@@ -28,13 +29,14 @@ EXEDIR = ../exe
 TARG = $(EXEDIR)/pese-$(POT).x$(EXESUFFIX)
 OBJDIR = obj
 OBJDIR_OPT = obj_opt
-SPRNGLIB = /home/mobergdr/codes/sprng
+#SPRNGLIB = /home/mobergdr/codes/sprng
 
 #  FC = f77
   FC = gfortran
   LD = gfortran
   OPT_FFLAGS = -O3
-  FTPPFLAGS = -I$(SPRNGLIB)/SRC -I.. -c
+  FTPPFLAGS = -I.. -c
+#  FTPPFLAGS = -I$(SPRNGLIB)/SRC -I.. -c
 ifeq ($(TINKER),0)
   FFLAGS = -c
 else
@@ -42,17 +44,17 @@ else
   FFLAGS = -c -I$(TINKLIB)
 endif
   COMPLIB = -llapack -lblas
-  RNGLIB = -lmlfg
-  LIBS = $(COMPLIB) $(RNGLIB)
+#  RNGLIB = -lmlfg
+#  LIBS = $(COMPLIB) $(RNGLIB)
+  LIBS = $(COMPLIB)
 #  LDFLAGS = -O3 -g -L../../sprng/lib
 #  LDFLAGS = -O3 -g -L../../sprng/lib -L/soft/apps/packages/lapack-3.0/lib
-  LDFLAGS = -O3 -g -L$(SPRNGLIB)/lib -L/usr/lib64 -L/home/jasper/lib
+#  LDFLAGS = -O3 -g -L$(SPRNGLIB)/lib -L/usr/lib64 -L/home/jasper/lib
+  LDFLAGS = -O3 -g -L/usr/lib64 -L/home/jasper/lib
 
 VPATH = ..:../../autopot
 
 SRC =	$(POT).f \
-        angmom.f \
-        ange.f \
 	driver.f \
         energy.F \
 	getgrad.f \
@@ -61,7 +63,8 @@ SRC =	$(POT).f \
         header.f \
         initmol.f \
         premol.f \
-        readin.f
+        readin.f \
+        timing.f
 
 OBJ = $(patsubst %.f,%.o,$(SRC))
 OBJ := $(patsubst %.F,%.o,$(OBJ))
@@ -79,15 +82,16 @@ targ: $(TARG)
 
 # dependencies
 angmom.o:     param.f
-driver.o:     param.f c_sys.f c_traj.f c_ran.f c_output.f
-energy.o:     param.f c_sys.f c_traj.f c_ran.f
+driver.o:     param.f c_sys.f c_traj.f c_output.f
+energy.o:     param.f c_sys.f c_traj.f 
 getgrad.o:    param.f c_sys.f
 getpem.o:     param.f c_sys.f
 gettemp.o:    param.f
 header.o:
 initmol.o:    param.f c_sys.f c_traj.f
 premol.o:     param.f c_sys.f
-readin.o:     param.f c_sys.f c_traj.f c_ran.f
+readin.o:     param.f c_sys.f c_traj.f 
+timing.o:
 
 COMPILE = $(FC) $(FFLAGS) $(OPT)
 

@@ -108,14 +108,14 @@ c      if (molpe.eq.0.d0) then
 !        if (repflag.eq.1) then
 !          molpe = pemd(nsurf,nsurf)
 !        else
-      print *,"PEM adiabatic = ",pema
-      print *,"nsurf = ",nsurf
+!      print *,"PEM adiabatic = ",pema
+!      print *,"nsurf = ",nsurf
       molpe = pema(nsurf)
 !        endif
 c       correct for this atom groups zero of energy
       print *,"ezero = ",ezero
       print *,"ezeroim = ",ezeroim(im)
-      print *,"im = ",im
+!      print *,"im = ",im
       molpe = molpe + ezero - ezeroim(im)
 !      else
 !        write(6,*)"Initial potential energy evalulation skipped"
@@ -155,47 +155,47 @@ c     random thermal sample
       write(6,*)
       endif
 
-      call gettemp(ppm,mmm,natom(im),temp,ke)
-      write(6,106)"Calculated temp = ",temp," K"
-      write(6,106)"Total KE        = ",ke*autoev," eV"
-      write(6,*)
+!      call gettemp(ppm,mmm,natom(im),temp,ke)
+!      write(6,106)"Calculated temp = ",temp," K"
+!      write(6,106)"Total KE        = ",ke*autoev," eV"
+!      write(6,*)
 
 c MANIPULATE COORDINATES AND MOMENTA
 c     remove overall momenta
-      xtot=0.d0
-      ytot=0.d0
-      ztot=0.d0
-      mtot=0.d0
-      do i=1,natom(im)
-        xtot=xtot+ppm(1,i)
-        ytot=ytot+ppm(2,i)
-        ztot=ztot+ppm(3,i)
-        mtot = mtot + mmm(i)
-      enddo
-      do i=1,natom(im)
-        ppm(1,i)=ppm(1,i)-xtot*mmm(i)/mtot
-        ppm(2,i)=ppm(2,i)-ytot*mmm(i)/mtot
-        ppm(3,i)=ppm(3,i)-ztot*mmm(i)/mtot
-      enddo
-      call gettemp(ppm,mmm,natom(im),temp,ke)
-      write(6,*)"Removed CoM motion"
-      write(6,106)"Calculated temp = ",temp," K"
-      write(6,106)"Total KE        = ",ke*autoev," eV"
-      write(6,*)
+!      xtot=0.d0
+!      ytot=0.d0
+!      ztot=0.d0
+!      mtot=0.d0
+!      do i=1,natom(im)
+!        xtot=xtot+ppm(1,i)
+!        ytot=ytot+ppm(2,i)
+!        ztot=ztot+ppm(3,i)
+!        mtot = mtot + mmm(i)
+!      enddo
+!      do i=1,natom(im)
+!        ppm(1,i)=ppm(1,i)-xtot*mmm(i)/mtot
+!        ppm(2,i)=ppm(2,i)-ytot*mmm(i)/mtot
+!        ppm(3,i)=ppm(3,i)-ztot*mmm(i)/mtot
+!      enddo
+!      call gettemp(ppm,mmm,natom(im),temp,ke)
+!      write(6,*)"Removed CoM motion"
+!      write(6,106)"Calculated temp = ",temp," K"
+!      write(6,106)"Total KE        = ",ke*autoev," eV"
+!      write(6,*)
 
 c     calculate angular motion
       if (natom(im).gt.2.and.initx(im).ne.3) then
 c     don't do for diatoms or for special atom-diatom initial conditions
-      call ange(xxm,ppm,mmm,natom(im),eig,bigj,bigjtot,erot,erottot)
-      write(6,106)"Total angular momentum      ",bigjtot," au"
-      write(6,107)"Angular momentum components ",bigj," au"
-      write(6,106)"Total rotational energy     ",erottot*autoev," eV"
-      write(6,107)"Rotational energy components",erot(1)*autoev,
-     &   erot(2)*autoev,erot(3)*autoev," eV"
-      write(6,*)
+!      call ange(xxm,ppm,mmm,natom(im),eig,bigj,bigjtot,erot,erottot)
+!      write(6,106)"Total angular momentum      ",bigjtot," au"
+!      write(6,107)"Angular momentum components ",bigj," au"
+!      write(6,106)"Total rotational energy     ",erottot*autoev," eV"
+!      write(6,107)"Rotational energy components",erot(1)*autoev,
+!     &   erot(2)*autoev,erot(3)*autoev," eV"
+!      write(6,*)
  107  format(1x,a,3f12.5,1x,a)
 
-      if (initj(im).ne.1) then
+!      if (initj(im).ne.1) then
 c Comment \/ this to skip removal of angular momentum
 c      call noang(xxm,ppm,mmm,natom(im))
 c      write(6,*)"Removed overall angular motion"
@@ -207,12 +207,12 @@ c      write(6,106)"Total rotational energy     ",erottot*autoev," eV"
 c      write(6,107)"Rotational energy components",erot(1)*autoev,
 c     &   erot(2)*autoev,erot(3)*autoev," eV"
 c Comment ^ this to skip removal of angular momentum
-      call gettemp(ppm,mmm,natom(im),temp,ke)
-      write(6,*)
-      write(6,106)"Calculated temp = ",temp," K"
-      write(6,106)"Total KE        = ",ke*autoev," eV"
-      write(6,*)
-      endif
+!      call gettemp(ppm,mmm,natom(im),temp,ke)
+!      write(6,*)
+!      write(6,106)"Calculated temp = ",temp," K"
+!      write(6,106)"Total KE        = ",ke*autoev," eV"
+!      write(6,*)
+!      endif
 
       if (initp(im).eq.0.and.escale0im(im).gt.0.d0) then
 c       rescale momenta
@@ -261,23 +261,18 @@ c print coordinates
 
 c WRITE INITIAL ENERGY AND ANGULAR MOMENTUM
       write(6,*)"Info for this AG only"
-!      if (ldofrag) then
       call getpem(xxm,natom(im),pema,pemd,gpema,gpemd,dvec,symb)
-        if (repflag.eq.1) then
-          pe = pemd(nsurf,nsurf)
-        else
-          pe = pema(nsurf)
-        endif
-c       correct for this atom groups zero of energy
-        pe = pe + ezero - ezeroim(im)
-!      else
-!        write(6,*)"Initial potential energy evalulation skipped"
-!        pe = 0.d0
-!      endif
+      if (repflag.eq.1) then
+        pe = pemd(nsurf,nsurf)
+      else
+        pe = pema(nsurf)
+      endif
+c     correct for this atom group's zero of energy
+      pe = pe + ezero - ezeroim(im)
       peagi(im)=pe
-      call gettemp(ppm,mmm,natom(im),temp,ke)
+!      call gettemp(ppm,mmm,natom(im),temp,ke)
 !      call ange(xxm,ppm,mmm,natom(im),eig,bigj,bigjtot,erot,erottot)
-      te = pe+ke
+!      te = pe+ke
       write(6,106)"Initial potential energy   = ",
      &   pe*autoev," eV"
 !      write(6,106)"Initial kinetic energy     = ",
@@ -300,8 +295,8 @@ c save AG info
 !      eintagi(im)=ke
 !      bigjtotagi(im)=bigjtot
 !      do i=1,3
-!      bigjagi(i,im)=bigj(i)
-!      erotagi(i,im)=erot(i)
+!        bigjagi(i,im)=bigj(i)
+!        erotagi(i,im)=erot(i)
 !      enddo
 
 c write manipulated data back to xx and pp arrays
@@ -313,8 +308,8 @@ c write manipulated data back to xx and pp arrays
         enddo
       enddo
 
-      print *,"xx = "
-      print *,((xx(i,j),i=1,natom(im)),j=1,3)!,((pp(i,j),i=1,3),j=1,3)
+!      print *,"xx = "
+!      print *,((xx(i,j),i=1,natom(im)),j=1,3)!,((pp(i,j),i=1,3),j=1,3)
 
 c temp
       rtrans=0.d0
